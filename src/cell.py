@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-@dataclass
+@dataclass()
 class Cell:
     x: int
     y: int
@@ -17,4 +17,3 @@ class Cell:
 
     def make_dead(self) -> None:
         self.is_alive = False
-        print(self.x, self.y, self.is_alive)
