@@ -7,6 +7,7 @@ from config import config
 from logic import GameLogic
 from pygame.color import THECOLORS
 from pygame.event import Event
+from ui import Button, ButtonFactory
 from utils import convert_to_coords
 
 logger = logging.getLogger(__name__)
@@ -19,6 +20,7 @@ class Game:
         self.screen = pygame.display.set_mode((config.width, config.heigth))
         self.game_logic = GameLogic()
         self.is_started = False
+        self.screen.fill(THECOLORS["gray"])
 
     def _draw_board(self, board: list[list[Cell]], cell_size: int) -> None:
         for row in board:
@@ -35,38 +37,32 @@ class Game:
         pygame.display.flip()
 
     def _draw_start_button(self) -> None:
-        x = config.width - 100
-        y = 10
-        width = 90
-        height = 50
-
-        self.start_button = pygame.Rect(
-            x, y, width, height
+        button = Button(
+            x=config.width - 120,
+            y=10,
+            width=110,
+            height=50,
+            button_color="white",
+            font=pygame.font.SysFont('Arial',28),
+            text="Start/Stop",
+            text_color="black"
         )
-
-        pygame.draw.rect(
-            self.screen,
-            THECOLORS["yellow"],
-            self.start_button,
-        )
-        pygame.display.flip()
+        button_factory = ButtonFactory(self.screen)
+        self.start_button = button_factory.create(button)
 
     def _draw_next_step_button(self):
-        x = config.width - 100
-        y = 100
-        width = 90
-        height = 50
-
-        self.next_step_button = pygame.Rect(
-            x, y, width, height
+        button = Button(
+            x=config.width - 120,
+            y=100,
+            width=110,
+            height=50,
+            button_color="white",
+            font=pygame.font.SysFont('Arial',28),
+            text="Next Step",
+            text_color="black"
         )
-
-        pygame.draw.rect(
-            self.screen,
-            THECOLORS["red"],
-            self.next_step_button,
-        )
-        pygame.display.flip()
+        button_factory = ButtonFactory(self.screen)
+        self.next_step_button = button_factory.create(button)
 
     def _init_game(self):
         rows = config.rows
